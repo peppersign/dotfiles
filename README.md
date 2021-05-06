@@ -24,7 +24,7 @@ Using ST as terminal emulator, tried urxvt but I'll stick with st.
 
 
 ## setup
-<img src="https://github.com/catsploit/dotfiles/blob/master/myrice.png" alt="img">
+<img src="https://github.com/catsploit/dotfiles/blob/master/rice2.png" alt="img">
 *Why yes I like anime girls how did you know?*
 
 

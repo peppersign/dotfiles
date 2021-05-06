@@ -22,3 +22,7 @@
 # Open alsamixer
 "st alsamixer"
 	Alt+a
+
+# Screenshoot
+"shoot 1"
+	Print
