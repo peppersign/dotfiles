@@ -1,0 +1,28 @@
+
+# Increase volume
+"amixer -c 0 set Master 5%+; pingstatusbar" 
+	XF86AudioRaiseVolume
+
+# Decrease volume
+"amixer -c 0 set Master 5%-; pingstatusbar"
+	XF86AudioLowerVolume
+
+# Audio mute
+"amixer -c 0 set Master toggle; pingstatusbar"
+	XF86AudioMute
+
+# Drive mounter
+"usbmounter"
+	Alt+s
+
+# Open firefox
+"firefox"
+	Alt+w
+
+# Open alsamixer
+"st alsamixer"
+	Alt+a
+
+# Screenshoot
+"shoot 1"
+	Print

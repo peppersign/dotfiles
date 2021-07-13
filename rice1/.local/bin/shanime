@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+#-*- coding:utf-8 -*-
+
+from pickle import dump, load
+import sys
+import os
+
+
+RED = '\033[1;31m'
+GRAY = '\033[1;30m'
+CYAN = '\033[1;36m'
+LWHITE = '\033[1;37m'
+LGREEN = '\033[1;32m'
+WHITE = '\033[0;37m'
+
+# - SAVE BINARY FILE IN: -#
+BIN_PATH = '/home/senkoloaf/animelist'
+# ----------------------- #
+
+
+def load_config():
+    try:
+        alist = open(BIN_PATH, 'rb')
+        anime_dict = load(alist); alist.close()
+
+        return anime_dict
+
+    except FileNotFoundError:
+        anime_dict = import_list(input("[?] /path/to/animelist -> "))
+        alist = open(BIN_PATH, 'wb')
+        dump(anime_dict, alist); alist.close()
+
+        return anime_dict
+
+
+def import_list(path_animelist):
+    """Import an existent anime list with 'anime -> status' format"""
+
+    if os.path.isfile(path_animelist):
+        alist = open(path_animelist, 'r')
+        anime_dictionary = {}
+
+        for line in alist.readlines():
+            try:
+                anime = line.split('->')
+                name = anime[0].rstrip(); status = anime[1].strip('\n').lstrip()
+                anime_dictionary[name.lower()] = status.lower()
+
+            except IndexError:
+                pass
+
+        alist.close()
+        return anime_dictionary
+
+    else:
+        exit(cprint("[!] Anime list not found"))
+
+
+def update_list():
+    """Updates binary file when exiting the program"""
+    global anime_list
+
+    alist = open(BIN_PATH, 'wb')
+    dump(anime_list, alist)
+    alist.close()
+
+
+def cprint(text):
+    state = text[:3]
+    states = {'[!]': RED,
+              '[?]': GRAY}
+
+    return print(f"{states.get(state)}{state}{WHITE + text[3:]}") 
+
+
+
+class CLI:
+    def __init__(self, anime=None, command=None, argument=None):
+        self.anime = anime
+        self.command = command
+        self.argument = argument
+
+
+    def switch(self, command):
+        try:
+            method = getattr(self, command)
+            return method(self.argument)
+        except Exception:
+            return cprint("[!] Invalid instruction")
+
+    
+    def status(self, argument):
+        global anime_list 
+        return print(f'{CYAN}[{self.anime}] {WHITE}{anime_list.get(self.anime.lower())}')
+
+
+    def set(self, argument):
+        global anime_list
+        anime_list[self.anime.lower()] = argument
+
+
+    def remove(self, argument):
+        global anime_list
+        anime_list.pop(self.anime.lower())
+
+    
+    def export(self, argument):
+        global anime_list
+        alist = open('./list_export.txt', 'w')
+
+        for anime, status in anime_list.items():
+            alist.write(f'{anime:<50} -> {status}\n')
+
+        alist.close()
+
+    
+    def show(self, argument):
+        for anime, status in anime_list.items():
+            print(f"{LWHITE}{anime:<50} {LGREEN} -> {LWHITE}{status}")
+
+
+def main():
+    if len(sys.argv) >= 3:
+        anime = sys.argv[1]
+        command = sys.argv[2]
+        argument = sys.argv[3] if len(sys.argv) == 4 else None
+
+        cli = CLI(anime=anime, command=command, argument=argument)
+        cli.switch(command=command)
+
+    elif len(sys.argv) == 2:
+        command = sys.argv[1]
+        cli = CLI()
+        cli.switch(command=command)
+
+    else:
+        return cprint("[!] Invalid command, ex: 'shanime \"Yuru Yuri\" set 8'") 
+
+    update_list()
+    
+
+if __name__ == '__main__':
+    anime_list = load_config()
+    main()

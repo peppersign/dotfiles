@@ -1,0 +1,21 @@
+#!/usr/bin/python3
+#-*- coding:utf-8 -*-
+
+from mss.linux import MSS as mss
+from datetime import datetime
+from os import system, path
+import sys
+
+
+monitor = int(sys.argv[2]) if len(sys.argv) >= 3 else 1
+name = sys.argv[1] if len(sys.argv) >= 2 else datetime.now().strftime('Screen_%d-%m-%y__%H:%M.png')
+
+#If file already exists
+if path.isfile(f'/home/senkoloaf/screenshoots/{name}'):
+    name = f"(cp)_{name}"
+
+with mss() as ss:
+    ss.compression_level = 0
+    file = ss.shot(mon=monitor, output=f"/home/senkoloaf/screenshoots/{name}")
+    system("notify-send 'Screenshoot saved'")
+

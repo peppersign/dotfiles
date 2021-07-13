@@ -1,0 +1,27 @@
+#!/usr/bin/python3
+#-*- coding:utf-8 -*-
+
+from mss.linux import MSS as mss
+import datetime
+import os.path
+import sys
+import os
+
+
+MONITOR = 1
+
+if len(sys.argv[1:]):
+    MONITOR = int(sys.argv[1])
+
+name = datetime.datetime.now().strftime('SS_%d-%m-%y_%H_%M')
+
+def filename(name):
+    if os.path.isfile(f"{name}.png"):
+        new = "{name}(1).png"
+        os.rename(name, new)
+        return new
+    return f"{name}.png"
+        
+with mss() as ss:
+    file = ss.shot(mon=MONITOR, output=f"/home/senkoloaf/screenshoots/{filename(name)}")
+    os.system("notify-send 'Screenshoot saved'")

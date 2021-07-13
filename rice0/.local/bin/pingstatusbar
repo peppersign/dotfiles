@@ -1,0 +1,3 @@
+#!/bin/sh
+
+kill -TERM "$(pgrep sleep)"

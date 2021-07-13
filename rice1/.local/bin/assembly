@@ -1,0 +1,23 @@
+#!/bin/env bash
+
+#usage: assembly <program.s> [i386, arm](optional)
+
+[[ -n $1 ]] && [[ -a $1 ]] || exit 1
+PROGRAM="${1%.*}"
+
+function i386 {
+    as --32 -gstabs -o ${PROGRAM}.o $1 && ld -m elf_i386 -o $PROGRAM "${PROGRAM}.o " || { echo "AS error, exiting"; exit 1 ; }
+    rm ${PROGRAM}.o
+}
+
+function arm {
+    as -gstabs -o ${PROGRAM}.o $1 && ld -o $PROGRAM "${PROGRAM}.o" || { echo "AS error, exiting"; exit 1 ; }
+    rm ${PROGRAM}.o
+}
+
+
+case $2 in 
+    i386) i386;;
+    arm) arm;;
+    *) i386;;
+esac
