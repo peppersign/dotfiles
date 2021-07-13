@@ -1,35 +1,32 @@
 # dotfiles
 
-Personal dotfiles since I'm trying to get into this rice thing. For now I'm with a basic setup.
-Here I'll be documenting what I've done till now. But with time this will be overwritten with new
-changes.
+This is an update for my current rice, since I shifted to i3-gaps with polybar.
+These are very small updates, not a lot of changes but minor improves in different scripts.
+
+For now I'm using this repo as a backup for differents scripts and dot files. If I happen to come back to ricing, then
+I'll do the necessary and do more than just tweaking with configuration files.
+
+| Rice      | WM    | Terminal  | Editor    | Bar       | Launcher  |
+| --------- |:-----:|:---------:|:---------:|:---------:| ---------:|
+| [rice0](1)| dwm   | st        | vim       | `null`    | dmenu     |
+| [rice1](2)| i3    | alacritty | vim       | polybar   | dmenu     |
+
+[1]:
+[2]: 
+
+## Setup
+
+Some details:
+
+- **Windows Manager ->** [i3-gaps]()
+- **Text editor ->** [vim]()
+- **Fetch tool ->** [soydev]()
+- **Terminal ->** [alacritty]()
+- **Bar ->** [polybar]()
+- **Launcher ->** dmenu
+
+>More scripts in `.local/bin`
 
 
-```
-Changes made:
-------------
-
--> Status bar script (btw, icons by fontawesome)
--> Keybindings for basic stuff
--> Colorscheme setup with pywal
--> USB mounter script (concept from LukeSmith)
--> Using dunst notifier
--> Basic screenshoot tool with mss in python
--> Monitor setup with xrandr
--> (Writing a basic fetch tool)
-```
-
-Actually using dwm as WM, but planning to shift to i3-gaps with polybar.
-Using ST as terminal emulator, tried urxvt but I'll stick with st.
-
-
-## setup
-<img src="https://github.com/catsploit/dotfiles/blob/master/rice2.png" alt="img">
-*Why yes I like anime girls how did you know?*
-
-
-I'll be updating this repository over time with new scripts and changes. But rn the actual
-setup has been very comfy so no problem.
-
-If you came here just for the wallpaper, here you go fren
-[niceu wallpaper](https://www.wallpaperflare.com/anime-c-programming-blue-eyes-book-cover-wallpaper-ytheg/download/1920x1080)
+##Preview
+![alt sus](linkshouldbeherexd  "amogus")
