@@ -16,7 +16,6 @@ set bg=dark
 set tabstop=4
 set shiftwidth=4
 set expandtab
-set sidescrolloff=999
 set scrolloff=999
 
 " Plugin manager

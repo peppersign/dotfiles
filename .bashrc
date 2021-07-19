@@ -35,7 +35,7 @@ function test_tree {
 
 #Print the current branch
 function git_branch {
-    local branch=$(git branch 2>/dev/null)
+    local branch=$(git branch 2>/dev/null | awk '/* / {printf $2}')
     local status=$(test_tree)
     git branch --no-color &>/dev/null && local output="─[${bold}${rd}${branch/\* }${status}${rs}${gr}]"
     echo "$output"
