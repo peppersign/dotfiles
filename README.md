@@ -11,8 +11,8 @@ I'll do the necessary and do more than just tweaking with configuration files.
 | [rice0](1)| `dwm` | `st`        | `vim`     | `null`    | `dmenu`   |
 | [rice1](2)| `i3`  | `alacritty` | `vim`     | `polybar` | `dmenu`   |
 
-[1]: https://github.com/catsploit/dotfiles/tree/master/rice0
-[2]: https://github.com/catsploit/dotfiles/tree/master/rice1
+[1]: https://github.com/catsploit/dotfiles/tree/rice0
+[2]: https://github.com/catsploit/dotfiles/tree/master
 
 ## Setup
 
