@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+#colors
+bg1="\e[42m" #green
+bg2="\e[44m" #blue
+bg3="\e[49m" #default bg
+bg4="\e[46m" #cyan
+bg5="\e[45m" #magenta
+fg1="\e[30m" #black
+fg2="\e[34m" #blue
+fg3="\e[32m" #green
+fg4="\e[36m" #cyan
+fg5="\e[39m" #default
+fg6="\e[35m" #magenta
+rs="\e[0m" #reset all attributes
+
+#glyphs
+home=""
+power=""
+dirpower=""
+
+#static modules
+glyph="\[$bg2\]\[$fg1\] $home  \[$fg2\]\[$bg1\]$power"
+prompt="\[$fg1\] \$ \[$fg6\]\[$bg3\]$power\[$rs\]"
+
+
+#variable modules
+function get_home {
+    local directories="\001$fg1\002 ~ "
+    echo -e "$directories"
+}
+
+
+function get_dirs {
+    [[ "$PWD" = "$HOME" ]] && get_home && return
+
+    local directories=""
+    IFS='/' dirsarray=( $(pwd) )
+    [[ "$PWD" =~ "$HOME" ]] && dirsarray=( ${dirsarray[@]:3} ) || dirsarray=( ${dirsarray[@]:1} )
+
+    for mod in "${dirsarray[@]}"; do
+        directories="${directories}\001$fg1\002 $mod \001$fg1\002$dirpower"
+    done
+
+    directories="${directories[@]:0: -1}"
+    echo -e "$directories"
+}
+
+
+function test_tree {
+    local state=""
+    ! [[ $(git status 2>/dev/null | tail -1) =~ nothing ]] && local state="*"
+    echo "$state"
+}
+
+
+function git_branch {
+    local branch=$(git branch 2>/dev/null | awk '/* / {printf $2}')
+    local status=$(test_tree)
+    local output=""
+
+    git branch --no-color &>/dev/null && {
+        output="\001$fg3\002\001$bg4\002$power\001$fg1\002   ${branch/\* }${status}\001$fg4\002\001$bg5\002$power"
+    } || {
+        output="\001$fg3\002\001$bg5\002$power"
+    }
+
+    echo -e "$output"
+}
+
+
+#echo -e "$glyph$(get_dirs)$(git_branch)$prompt "
+#PS1="$glyph$get_dirs$git_branch$prompt"
+PS1="\$(get_dirs)"
+PATHINFO="$PS1"
+PS1="\$(git_branch)"
+PS1="${glyph}${PATHINFO}${PS1}${prompt} "
+
