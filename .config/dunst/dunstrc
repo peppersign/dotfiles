@@ -1,0 +1,209 @@
+[global]
+    #Notifications on focused monitor
+    follow = mouse
+
+    #Box geometry
+    #geometry = "288x3-816+46"
+    geometry = "320x4-100+46"
+
+    #Volume/bright/etc bar
+    progress_bar = true
+
+    progress_bar_height = 10
+    progress_bar_frame_width = 1
+
+    progress_bar_min_width = 150
+    progress_bar_max_width = 300
+
+    #After surpasing the limit of notifications per space, then spawn a last one showing how many
+    #notifications are waiting to be displayed
+    indicate_hidden = yes
+
+    shrink = no
+
+    transparency = 40 
+
+    #Height of the notification box
+    notification_height = 75
+
+    #Thickness of the separator line between two notifications, 0 means no bar
+    #(btw, notifications can't be displayed in multiple windows for the time being)
+    separator_height = 1
+
+    #Distance bewten the content of the notification and the border (vertical)
+    padding = 15
+
+    #(horizontal)
+    horizontal_padding = 24
+
+    #Space between the icon and the text (horizontal)
+    #horizontal_padding takes care of this option
+    text_icon_padding = 8
+
+    #Thickness of that frame around the notification box
+    frame_width = 4
+
+    #Color of the frame
+    frame_color = "#ebdbb2"
+
+    #The frame's color is based into the frame color above
+    separator_color = frame
+
+    #Sort by urgency
+    sort = yes
+
+    #If the user is AFK, then don't let the notifications disappear until they come back, this is valid for X seconds
+    idle_threshold = 120
+
+    #Text font
+    #font = Monospace 10
+    font = Iosevka Nerd Font 11
+
+    #Space between two lines of text or more
+    line_height = 3
+
+    #Complete markup support on notifications
+    markup = full
+
+    #Format of the notification itself
+    format = "<b>%s</b>\n%b"
+
+    #Text alignment
+    alignment = center
+
+    #How text and icon should be aligned (vertically)
+    vertical_alignment = center
+
+    #Don't show age of message
+    show_age_threshold = -1
+
+    #If the notification somehow is bigger than the box, then split it into various boxes
+    word_wrap = yes
+
+    #If the above opt is turned off, then show the notification like this "this is a long messa..."
+    #ellipsize = middle
+
+    ignore_newline = no
+
+    #If you receive duplicated notifications, decide wheter to stack them or not
+    stack_duplicates = false
+
+    #The default behaviour shows a char at the beginning of the notification which indicates whether it is an action or something else
+    show_indicators = no
+
+
+    ##Icons
+    
+    icon_position = left
+    
+    #Scale smaller icons into bigger ones
+    min_icon_size = 0
+
+    #Scale bigger icons to X size
+    max_icon_size = 64 
+
+    #Path to your icons (path/to/icons:other/path/to/icons)
+    #icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/:/home/senkoloaf/.icons/
+
+
+    ##Other
+    
+    dmenu = /usr/bin/dmenu -p dunst:
+    browser = /usr/bin/firefox -new-tab
+
+    title = Dunst
+    class = Dunst #If you ever want to apply certain rules in i3 or other utility 
+
+    #Rounded corners, beware of your compositor since it can make it look weird
+    #corner_radius = 7
+
+    ##Mouse stuff
+
+    #Instead of closing the notification, execute an action if possible
+    #Tokens are prioritized by a left-to-right order
+    mouse_left_click = do_action, close_current
+    mouse_middle_click = do_action
+    mouse_right_click = close_current
+
+
+#[shortcuts]
+#Well, these are deprecated and should be managed through "dunstctl", which you can bind in your WM by the way
+
+
+[urgency_low]
+    #background = "#525252"
+    background = "#282828"
+    foreground = "#ebdbb2"
+    timeout = 4
+
+
+[urgency_normal]
+    background = "#282828"
+    foreground = "#ebdbb2"
+    timeout = 6
+    icon = ~/.icons/information.png
+
+
+[urgency_critical]
+    background = "#282828"
+    foreground = "#ebdbb2"
+    timeout = 0
+    icon = ~/.icons/warning.png
+
+
+#From now on you can apply certain rules to certain applications, like having telegram notifications with some blue
+#instead of the default values
+
+##Possible tokens to match
+#desktop_entry 
+#body
+#category
+#desktop_entry
+#icon
+#match_transient
+#msg_urgency
+#stack_tag
+#summary
+
+
+##Values to override
+#background
+#foreground
+#format
+#frame_color
+#fullscreen
+#new_icon
+#set_stack_tag
+#set_transient
+#timeout
+#urgency
+     
+
+[keyboard]
+    #match rule
+    stack_tag = "keyboard"
+
+    #Keyboard notifications don't go into history
+    history_ignore = yes 
+
+    #Keyboard icon
+    new_icon = ~/.icons/keyboard2.png
+
+    #Don't let them stack, just leave the newest one visible
+    set_stack_tag = yes
+
+
+[firefox_screenshoot]
+    desktop_entry = "Firefox"
+    summary = "Shot Copied"
+
+    new_icon = ~/.icons/picture.png
+    format = "<b>SCREENSHOOT</b>\nPress CTRL-V to paste"
+
+
+[screenshoot]
+    stack_tag = "screenshoot" 
+
+    format = "%s\n<span size='x-small' font_desc='UW Ttyp0'>%I</span>\nScreenshoot saved"
+
+/* vim:ft=cfg
