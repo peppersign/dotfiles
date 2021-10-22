@@ -21,8 +21,8 @@ bindsym $mod+Return exec alacritty
 #Kill focused window
 bindsym $mod+Shift+q kill
 
-#dmenu
-bindsym $mod+d exec --no-startup-id dmenu_run
+#rofi
+bindsym $mod+d exec --no-startup-id ~/.config/polybar/scripts/launcher.sh 
 
 #Focus vim keys
 bindsym $mod+j focus left
@@ -154,29 +154,34 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always setxkbmap latam
 
 #No title bar
-for_window [class=".*"] border pixel 3
+for_window [class=".*"] border pixel 4
 
 #Execute sxiv always in fullscreen
 for_window [title="sxiv"] fullscreen toggle
 
 #Gaps
-gaps inner 7 
-gaps outer 7
+gaps inner 10
+gaps outer 20
 
 #Binds
 ## Firefox
-bindsym $mod+c; exec firefox
+bindsym $mod+c; exec --no-startup-id firefox
 
 ##Telegram
-bindsym $mod+t workspace 4; exec /usr/bin/telegram-desktop 
+#bindsym $mod+t workspace 5; exec --no-startup-id /usr/bin/telegram-desktop 
 
 ##Screenshoot
 bindsym Print; exec shoot
 
 ##"Screen saver" with mario dancing gangnam style
-bindsym F9; workspace 9; exec --no-startup-id sxiv -b -q -a -z 350 /home/senkoloaf/Downloads/mario.gif
+#bindsym F9; workspace 9; exec --no-startup-id sxiv -b -q -a -z 350 /home/senkoloaf/Downloads/mario.gif
 
-#Colors 	 	        border    bg      text    indicator child border 
-client.focused          #47c73688 #285577 #ffffff #47c73688 #47c73688
-client.unfocused        #ffffff88 #222222 #888888 #ffffff88 #ffffff88
-client.focused_inactive #ffffff88 #5f676a #ffffff #ffffff88 #ffffff88
+##Change keyboard layout 
+bindsym $mod+u exec --no-startup-id ~/.local/bin/lang
+
+
+client.focused              #ffffff     #ffffff     #ffffff     #ffffff     #ffffff
+client.focused_inactive     #2b2b2b     #a6a6a6     #a6a6a6     #a6a6a6     #a6a6a6
+client.unfocused            #2b2b2b     #a6a6a6     #a6a6a6     #a6a6a6     #a6a6a6
+client.urgent               #58ff42     #58ff42     #58ff42     #58ff42     #58ff42
+client.placeholder          #ffffff     #ffffff     #ffffff     #ffffff     #ffffff
