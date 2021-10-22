@@ -1,21 +1,41 @@
-#!/usr/bin/python3
-#-*- coding:utf-8 -*-
+#!/bin/env bash
 
-from mss.linux import MSS as mss
-from datetime import datetime
-from os import system, path
-import sys
+#shoot: a wrapper around the mss utility
+#Possible use cases:
+#    $ shoot                 #Shoots the 1st monitor (default), name is declared as the current time
+#    $ shoot 2               #Shoots the 2nd monitor, name is declared as the current time
+#    $ shoot image.png       #Shoots the 1st monitor, name is defined as "image.png"
+#    $ shoot pic.png 2       #Shoots the 2nd monitor, name is defined as "pic.png"
 
 
-monitor = int(sys.argv[2]) if len(sys.argv) >= 3 else 1
-name = sys.argv[1] if len(sys.argv) >= 2 else datetime.now().strftime('Screen_%d-%m-%y__%H:%M.png')
+#-----SAVE SCREENSHOOTS IN-----#
+FOLDER="$HOME/screenshoots/"
+#------------------------------#
 
-#If file already exists
-if path.isfile(f'/home/senkoloaf/screenshoots/{name}'):
-    name = f"(cp)_{name}"
 
-with mss() as ss:
-    ss.compression_level = 0
-    file = ss.shot(mon=monitor, output=f"/home/senkoloaf/screenshoots/{name}")
-    system("notify-send 'Screenshoot saved'")
+function handle {
+    ss_monitor=${1:-1}
+    ss_name=${2:-$(date +"Screen_%d-%m-%y__%H:%M.png")} 
+
+    [[ -a "$FOLDER/$ss_name" ]] && ss_name="(cp)_$ss_name"
+    mss -q -l 0 -m $ss_monitor -o "$FOLDER/$ss_name" 
+
+    action=$(dunstify -A "default,Open" -h string:x-dunst-stack-tag:screenshoot -i "$FOLDER/$ss_name" "")
+    case "$action" in
+        "default") i3-msg 'workspace 4'; exec sxiv -aq "$FOLDER/$ss_name" ;;
+        *) exit 0;;
+    esac
+
+}
+
+
+for arg in "$@"; do
+    case $arg in
+        [0-9]) monitor="$arg";;
+        *) name="$arg"
+    esac
+done
+
+handle "$monitor" "$name"
+
 

@@ -1,0 +1,13 @@
+#!/bin/env bash
+
+current=$(setxkbmap -print | awk -F+ '/xkb_symbols/ {print $2}')
+function notify { dunstify -h string:x-dunst-stack-tag:keyboard "KEYBOARD" "$1 layout set" ; }
+function latam { [[ $current != "latam" ]] && setxkbmap latam; notify "Spanish"; }
+function us { [[ $current != "us" ]] && setxkbmap us; notify "English" ; }
+
+case $1 in
+    "latam") latam ;;
+    "us") us ;;
+    *) [[ $current = "latam" ]] && us || latam ;; 
+
+esac

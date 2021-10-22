@@ -1,0 +1,111 @@
+#!/bin/env sh
+
+
+#btw: a simple fetch tool made for the arch linux OS.
+#I'm assuming you have a non-stripped-down system
+#(haven't tested on arch-based distributions)
+
+
+#------CONFIG------#
+OSICON=""
+UPICON=""
+TMICON=""
+SHICON=""
+PKICON=""
+WMICON=""
+
+#DELIMITER="═"
+DELIMITER="-"
+
+#Colors/Styles
+GR="\e[32m"
+CY="\e[36m"
+WH="\e[39m"
+BL="\e[34m"
+MG="\e[35m"
+YL="\e[93m"
+
+BOLD="\e[1m"
+RESET="\e[0m"
+#------------------#
+
+
+get_os() {
+    source /etc/os-release && echo -en "$PRETTY_NAME"; return 0
+    [[ -a '/etc/issue' ]] && cat '/etc/issue' | awk '{print $1,$2}'; return 0
+    echo -n "Arch Linux"
+}
+
+
+get_uptime() {
+    echo -en $(uptime -p | awk '{ print (NF==5) ? $2 "h " $4 "m" : $2 "m"  }')
+}
+
+
+get_shell() {
+    [[ -n "$SHELL" ]] && IFS='/' read -a ret <<< "$SHELL"; echo -en "${ret[-1]}"; return 0
+    [[ -a "/proc/$$/comm" ]] && cat "/proc/$$/comm"; return 0
+    echo -n "epicshell"
+}
+
+
+get_packages() {
+    echo -en $(pacman -Q | wc -l)
+    return 0
+}
+
+
+get_wm() { #TODO: Wayland support
+    [[ $(command -v xprop) ]] && {
+        wm_id=$(xprop -root _NET_SUPPORTING_WM_CHECK | awk '{printf $5}')
+        [[ -n "$wm_id" ]] && read -a ret <<< "$(xprop -id "$wm_id" _NET_WM_NAME)" && wm=${ret[2]//\"/}    
+        echo -n "$wm"
+        return 0
+
+    } || {
+        echo -n "epicwm"
+    }
+}
+
+
+get_terminal() { #https://askubuntu.com/questions/476641/how-can-i-get-the-name-of-the-current-terminal-from-command-line
+    parent=$(ps -p $$ -o ppid=)
+    parent=$(ps -p $parent -o ppid=)
+    terminal=$(ps -p $parent -o args=)
+
+    echo -n "$terminal"
+}
+
+
+user_at_host() {
+    var="$USER@$HOSTNAME"
+    len=${#var}
+    var=$(printf "%${len}s")
+    echo -en ${var// /$DELIMITER}
+}
+
+
+color_blocks() {
+    for i in {31..36}; do
+        echo -en "\e[${i}m ⬤"
+    done
+}
+
+
+fetch="
+$RESET$GR$BOLD⠀⠀⠀⠀⣠⣶⡾⠏⠉⠙⠳⢦⡀⠀⠀⠀⢠⠞⠉⠙⠲⡀⠀      $BL$USER@$HOSTNAME
+$RESET$GR$BOLD⠀⠀⠀⣴⠿⠏⠀⠀⠀⠀⠀⠀⢳⡀⠀⡏⠀⠀⠀⠀⠀⢷       $RESET$(user_at_host)
+$RESET$GR$BOLD⠀⠀⢠⣟⣋⡀⢀⣀⣀⡀⠀⣀⡀⣧⠀⢸⠀⠀⠀⠀⠀ ⡇      
+$RESET$GR$BOLD⠀⠀⢸⣯⡭⠁⠸⣛⣟⠆⡴⣻⡲⣿⠀⣸⠀⠀OK⠀ ⡇      $CY$OSICON  os       $YL$(get_os)
+$RESET$GR$BOLD⠀⠀⣟⣿⡭⠀⠀⠀⠀⠀⢱⠀⠀⣿⠀⢹⠀⠀⠀⠀⠀ ⡇      $CY$UPICON  uptime   $YL$(get_uptime) 
+$RESET$GR$BOLD ⠀⠙⢿⣯⠄⠀⠀⠀⢀⡀⠀⠀⡿⠀⠀⡇⠀⠀⠀⠀⡼       $CY$SHICON  shell    $YL$(get_shell)
+$RESET$GR$BOLD⠀⠀⠀⠀⠹⣶⠆⠀⠀⠀⠀⠀⡴⠃⠀⠀⠘⠤⣄⣠⠞⠀       $CY$PKICON  pkges    $YL$(get_packages)
+$RESET$GR$BOLD⠀⠀⠀⠀⠀⢸⣷⡦⢤⡤⢤⣞⣁⠀⠀⠀⠀⠀⠀⠀⠀⠀       $CY$WMICON  wm       $YL$(get_wm)⠀
+$RESET$GR$BOLD⠀⠀⢀⣤⣴⣿⣏⠁⠀⠀⠸⣏⢯⣷⣖⣦⡀⠀⠀⠀⠀⠀       $CY$TMICON  term     $YL$(get_terminal)⠀
+$RESET$GR$BOLD⢀⣾⣽⣿⣿⣿⣿⠛⢲⣶⣾⢉⡷⣿⣿⠵⣿⠀⠀⠀⠀⠀⠀
+$RESET$GR$BOLD⣼⣿⠍⠉⣿⡭⠉⠙⢺⣇⣼⡏⠀⠀⠀⣄⢸⠀⠀⠀⠀⠀⠀      $(color_blocks)
+$RESET$GR$BOLD⣿⣿⣧⣀⣿………⣀⣰⣏⣘⣆⣀⠀⠀
+
+"
+
+echo -en "$fetch"
