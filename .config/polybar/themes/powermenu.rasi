@@ -1,0 +1,73 @@
+
+* {
+    background: #242424;
+    background-alt: #6e6e6e;
+    foreground: #ffffff;
+    inputbar-color: #303030;
+
+    font: "Iosevka Nerd Font 12";
+    cursor: pointer;
+}
+
+
+window {
+    location: south east;
+    x-offset: -20;
+    y-offset: -50;
+    width: 15%;
+
+    background-color: @background;
+    text-color: @foreground;
+    border-color: White;
+    border: 3;
+
+    //padding: 10;
+    border-radius: 7px;
+    children: [inputbar, listview];
+}
+
+
+inputbar {
+    background-color: @inputbar-color;
+    text-color: inherit;
+    padding: 12;
+    children: [prompt, entry];
+}
+
+
+prompt {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+
+entry {
+    background-color: inherit; 
+    text-color: @inputbar-color;
+    blink: false;
+}
+
+
+listview {
+    background-color: inherit;
+    text-color: inherit;
+    padding: 8;
+    spacing: 6;
+    lines: 3;
+    cycle: true;
+    children: [element, element-text];
+}
+
+
+element, element-text {
+    background-color: inherit;
+    text-color: inherit;
+    padding: 0 6;
+}
+
+element selected {
+    background-color: @background-alt;
+    border-radius: 8;
+}
+
+/* vim:ft=css

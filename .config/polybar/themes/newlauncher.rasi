@@ -1,0 +1,90 @@
+configuration {
+    font: "Liberation Mono 11";
+    show-icons: true;
+    icon-theme: "Papirus";
+    display-drun: "";
+    drun-display-format: "{name}";
+    disable-history: false;
+    cursor: pointer;
+
+}
+
+
+* {
+    background: #333333;
+    background-alt: #665c54;
+    foreground: #ffffff;
+    inputbar-color: #303030;
+}
+
+
+window {
+    location: south west;
+    x-offset: 8; 
+    y-offset: -60;
+    width: 20%;
+
+    background-color: @background;
+    text-color: @foreground;
+    border: 1;
+    border-radius: 10px;
+    padding: 12px;
+
+    children: [inputbar, listview];
+
+}
+
+
+inputbar {
+    background-color: inherit;
+    text-color: inherit;
+    border: 2px;
+    border-radius: 7px;
+    border-color: @foreground;
+    padding: 10;
+
+    children: [prompt, entry];
+}
+
+
+prompt {
+    background-color: inherit;
+    text-color: inherit;
+    font: "feather 12";
+    padding: 0px 7px 0px 0px;
+}
+
+
+entry {
+    background-color: inherit;
+    text-color: inherit;
+    placeholder: "Search...";
+    placeholder-color: #696969; //nice
+}
+
+
+listview {
+    background-color: inherit;
+    text-color: inherit;
+    padding: 10px;
+    cycle: false;
+    lines: 10;
+
+    children: [element, element-text, selected];
+}
+
+
+element, element-text, element-icon {
+    background-color: inherit;
+    text-color: inherit;
+    padding: 2px 6px 1px 6px;
+}
+
+
+element selected {
+    background-color: @background-alt;
+    border-radius: 5px;
+}
+
+
+/* vim:ft=css
