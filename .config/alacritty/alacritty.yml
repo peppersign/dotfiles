@@ -1,21 +1,30 @@
+env:
+  TERM: 'xterm-256color'
+
+
 font:
   normal:
-    family: LiberationMono
-    style: Regular
+    family: JetBrainsMono Nerd Font
 
   bold:
-    family: LiberationMono
+    family: JetBrainsMono Nerd Font
     style: Bold
 
   italic:
-    familt: LiberationMono
+    familt: JetBrainsMono Nerd Font
     style: Italic
 
   bold_italic:
-    family: LiberationMono
+    family: JetBrainsMono Nerd Font
     style: Bold Italic
 
   size: 8.5
+  offset:
+    y: -1
+
+  glyph_offset: 
+    y: 0
+
 
 # Colors (Dracula)
 colors:
@@ -44,8 +53,17 @@ colors:
     white:   '#e6e6e6'
 
 
+#Window configuration
+#10
+window:
+  padding:
+    x: 10 
+    y: 10
+
+  dynamic_padding: true
+
 #Opacity
-background_opacity: 1.0
+background_opacity: 1.0 
 
 #Cursor
 cursor:
