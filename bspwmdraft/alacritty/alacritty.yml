@@ -1,0 +1,74 @@
+env:
+  TERM: 'xterm-256color'
+
+
+font:
+  normal:
+    family: JetBrainsMono Nerd Font
+
+  bold:
+    family: JetBrainsMono Nerd Font
+    style: Bold
+
+  italic:
+    familt: JetBrainsMono Nerd Font
+    style: Italic
+
+  bold_italic:
+    family: JetBrainsMono Nerd Font
+    style: Bold Italic
+
+  size: 8.5 
+  offset:
+    y: -1
+
+  glyph_offset: 
+    y: 0
+
+
+# Colors (gruvbox material)
+colors:
+  primary:
+    background: '#282828'
+    foreground: '#d4be98'
+
+  normal:
+    black:   '#000000'
+    red:     '#ea6962'
+    green:   '#a9b665'
+    yellow:  '#d8a657'
+    blue:    '#7daea3'
+    magenta: '#d3869b'
+    cyan:    '#89b482'
+    white:   '#d4be98'
+
+  bright:
+    black:   '#000000'
+    red:     '#ea6962'
+    green:   '#a9b665'
+    yellow:  '#d8a657'
+    blue:    '#7daea3'
+    magenta: '#d3869b'
+    cyan:    '#89b482'
+    white:   '#d4be98'
+
+
+    
+#Window configuration
+#10
+window:
+  padding:
+    x: 10 
+    y: 10
+
+  dynamic_padding: true
+  opacity: 1.0
+
+#Cursor
+cursor:
+  style:
+    shape: Underline
+    blinking: On
+
+
+

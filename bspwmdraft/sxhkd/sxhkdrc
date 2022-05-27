@@ -1,0 +1,103 @@
+
+# send the newest marked node to the newest preselected node
+#super + y
+#	bspc node newest.marked.local -n newest.!automatic.local
+
+#Swap current window with biggest window
+#super + g
+#	bspc node -s biggest.window
+
+
+#Node flags
+#alt + ctrl + {m,x,y,z}
+#	bspc node -g {marked,locked,sticky,private}
+
+
+# focus the node for the given path jump
+#alt + {p,b,comma,period}
+#	bspc node -f @{parent,brother,first,second}
+
+############################
+
+#Restart sxhkd
+alt + Escape
+    killall -q sxhkd; sxhkd &
+
+#Media keys
+XF86AudioRaiseVolume
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+XF86AudioLowerVolume
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+XF86AudioMute
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+XF86AudioMicMute
+    pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+#Terminal
+alt + Return
+    alacritty
+
+#Keyboard layout
+alt + u
+    lang
+
+#Browser
+alt + c
+    firefox
+
+
+#----BSPWM----#
+#Quit/restart bspwm
+alt + shift + {q,r}
+    bspc {quit, wm -r}
+
+#Kill window
+alt + shift + k
+    bspc node -k
+
+#Toggle fullscreen
+alt + f
+    bspc node -t ~fullscreen
+
+#Tiled/floating layout
+alt + {t,s}
+    bspc node -t {tiled,floating}
+
+#Focus/move a node
+alt + {_,shift + }{j,k,l,semicolon}
+    bspc node -{f,s} {west,south,north,east}
+
+#Alternate between windows
+alt + {_,shift + }Tab
+    bspc node -f {next,prev}.local.!hidden.window
+
+#Move between desktops (Current monitor)
+alt + bracket{left,right}
+    bspc desktop -f {prev,next}.local
+
+#Focus a desktop/send something to it
+alt + {_,shift +}{1-9,0}
+    bspc {desktop -f,node -d} '^{1-9,10}'
+
+#Horizontal/vertical split
+alt + {h,v}
+    bspc node -p {east,south}
+
+#Rotate nodes (change orientation)
+alt + r
+    bspc node -f @parent; bspc node -R 90; bspc node -f @first
+
+#Cancel preselection
+alt + space
+    bspc node -p cancel
+
+#Resize (stolen xd)
+alt + {Left,Down,Up,Right}
+    {bspc node -z right -20 0; bspc node -z left +20 0, \
+    bspc node -z top 0 -20; bspc node -z bottom 0 +20, \
+    bspc node -z top 0 +20; bspc node -z bottom 0 -20, \
+    bspc node -z right +20 0; bspc node -z left -20 0}
+

@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+
+#------CONFIG------#
+gaps=15
+padding=20
+
+bnormal='0x5a524c'
+bfocused='0x5a524c'
+bouter='0x45403d'
+#------------------#
+
+
+#Check whether there are 1 or 2 monitors and asign desktops accordingly
+monitors=( $(xrandr -q | grep -oh -P "^[a-zA-Z0-9_-]*(?=\sconnected)") )
+[[ "${#monitors[@]}" = 2 ]] && {
+    bspc monitor "${monitors[0]}" -d I 
+    bspc monitor "${monitors[1]}" -d II III VI V
+} || {
+    bspc monitor "${monitors[0]}" -d I II III VI V VI
+}
+
+
+#config cursor
+xsetroot -cursor_name left_ptr &
+
+#border thickness
+bspc config border_width 13
+
+#inner gaps
+bspc config window_gap "$gaps"
+
+#default ratio
+bspc config split_ratio 0.52
+
+#monocle layout
+bspc config borderless_monocle true
+bspc config gapless_monocle true
+
+#padding
+for i in top left bottom right; do
+    bspc config "${i}_padding" "$padding"
+    bspc config "${i}_monocle_padding" "$padding" 
+done
+bspc config top_padding $(( padding + 15 ))
+
+#mouse actions
+bspc config focus_follows_pointer true
+bspc config pointer_follows_focus true
+bspc config pointer_modifier mod1
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action2 resize_corner
+
+
+#-----AUTOSTART-----#
+#restart chwb2 borders
+killall bspc
+
+#sxhkd
+killall -q sxhkd; sxhkd &
+
+#polybar
+#placeholder
+
+#picom
+#placeholder
+
+#dunst
+#placeholder
+#-------------------#
+
+
+#both inner and outer borders (modified version of Gk's)
+draw() { chwb2 -I "$inner" -O "$bouter" -i "5" -o "8" $* ; }
+{ bspc subscribe node_geometry node_focus; } |
+    while read -r _; do
+        inner=$bfocused draw "$(bspc query -N -n .local.focused.\!fullscreen)"
+        inner=$bnormal draw "$(bspc query -N -n .\!focused.\!fullscreen)"
+    done
+
