@@ -18,7 +18,7 @@ you enjoy it. With enough talk, here is the *preview*
 - **Statusbar** ➤ [`polybar`](https://github.com/catsploit/dotfiles/tree/master/.config/polybar)
 
 
-![sus](https://github.com/catsploit/dotfiles/blob/master/finally.png  "amogus")
+![sus](https://github.com/peppersign/dotfiles/blob/master/finally.png  "amogus")
 
 
 ## ❖ CHANGELOGS
